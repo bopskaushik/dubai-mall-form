@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dubai Mall Online - Retailer Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #0a0a0a;
+            --soft-white: #fafafa;
+            --accent-gold: #d4af37;
+            --border-gray: #e5e5e5;
+            --text-gray: #666;
+            --error-red: #dc2626;
+            --success-green: #16a34a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            color: var(--primary-black);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0a0a0a 0%, #2d2d2d 100%);
+            padding: 60px 40px;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M0,0 Q300,40 600,20 T1200,0 L1200,120 L0,120 Z" fill="rgba(212,175,55,0.1)"/></svg>');
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            color: white;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header .subtitle {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--accent-gold);
+            font-style: italic;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-card {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+            border: 1px solid var(--border-gray);
+        }
+
+        .intro-text {
+            font-size: 1.05rem;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+            line-height: 1.8;
+            padding: 25px;
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-gold);
+        }
+
+        .form-group {
+            margin-bottom: 35px;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .required {
+            color: var(--error-red);
+            margin-left: 4px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid var(--border-gray);
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .helper-text {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        .error-message {
+            color: var(--error-red);
+            font-size: 0.85rem;
+            margin-top: 6px;
+            display: none;
+        }
+
+        .form-group.error input,
+        .form-group.error textarea {
+            border-color: var(--error-red);
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-black) 0%, #2d2d2d 100%);
+            color: white;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid var(--border-gray);
+            border-top: 4px solid var(--accent-gold);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            padding: 20px;
+            border-radius: 12px;
+            margin: 30px 0;
+            display: none;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.success {
+            background: #dcfce7;
+            border: 2px solid var(--success-green);
+            color: #166534;
+            display: block;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            border: 2px solid var(--error-red);
+            color: #991b1b;
+            display: block;
+        }
+
+        .message-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .reset-btn {
+            background: white;
+            color: var(--primary-black);
+            border: 2px solid var(--border-gray);
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 15px;
+        }
+
+        .reset-btn:hover {
+            border-color: var(--primary-black);
+            background: var(--soft-white);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .button-group button {
+            flex: 1;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+                letter-spacing: 4px;
+            }
+
+            .header .subtitle {
+                font-size: 1.5rem;
+            }
+
+            .form-card {
+                padding: 30px 25px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .reset-btn {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DUBAI MALL</h1>
+            <div class="subtitle">Online</div>
+        </div>
+
+        <div class="form-card">
+            <div class="intro-text">
+                Register your interest in joining Dubai Mall Online and nominate your lead point of contact to enable a smooth, fast onboarding and store go-live.
+            </div>
+
+            <div id="successMessage" class="message success" style="display: none;">
+                <span class="message-icon">✓</span>
+                <strong>Success!</strong> Your registration has been submitted successfully. We'll be in touch soon.
+            </div>
+
+            <div id="errorMessage" class="message error" style="display: none;">
+                <span class="message-icon">✕</span>
+                <strong>Error!</strong> There was a problem submitting your form. Please try again.
+            </div>
+
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="brand">Brand / Retail Group <span class="required">*</span></label>
+                    <input type="text" id="brand" name="brand" required>
+                    <span class="error-message">This field is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="name">Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required>
+                    <span class="error-message">This field is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="leadContact">Lead point of contact from your team for onboarding? <span class="required">*</span></label>
+                    <textarea id="leadContact" name="leadContact" required></textarea>
+                    <span class="error-message">This field is required</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="pocEmail">POC email <span class="required">*</span></label>
+                    <input type="email" id="pocEmail" name="pocEmail" required>
+                    <span class="error-message">Please enter a valid email address</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="pocMobile">POC Mobile No</label>
+                    <input type="tel" id="pocMobile" name="pocMobile">
+                    <div class="helper-text">Optional - Include country code if applicable</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Any notes or context we should be aware of?</label>
+                    <textarea id="notes" name="notes"></textarea>
+                    <div class="helper-text">Share any additional information that might help us serve you better</div>
+                </div>
+
+                <div class="loading" id="loadingIndicator">
+                    <div class="spinner"></div>
+                    <p>Submitting your registration...</p>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="submit-btn" id="submitBtn">Submit Registration</button>
+                    <button type="button" class="reset-btn" id="resetBtn">Clear Form</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>© 2026 Dubai Mall Online. All rights reserved.</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">For assistance, please contact our support team.</p>
+        </div>
+    </div>
+
+    <script>
+        // IMPORTANT: Replace this URL with your Google Apps Script Web App URL
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxj5UeQyckLXTQMqCXY8XCWDapBJ2-0FFKRQOxyoxBaWGckYo47zzgym6Yplgp-ptpBxQ/exec';
+
+        const form = document.getElementById('registrationForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const loadingIndicator = document.getElementById('loadingIndicator');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateForm() {
+            let isValid = true;
+            const formGroups = form.querySelectorAll('.form-group');
+
+            formGroups.forEach(group => {
+                group.classList.remove('error');
+            });
+
+            // Validate required text fields
+            const requiredFields = ['brand', 'name', 'leadContact', 'pocEmail'];
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.closest('.form-group').classList.add('error');
+                    isValid = false;
+                }
+            });
+
+            // Validate email format
+            const emailField = document.getElementById('pocEmail');
+            if (emailField.value.trim() && !validateEmail(emailField.value)) {
+                emailField.closest('.form-group').classList.add('error');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // Handle form submission
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Hide previous messages
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            // Validate form
+            if (!validateForm()) {
+                errorMessage.textContent = 'Please fill in all required fields correctly.';
+                errorMessage.style.display = 'block';
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            // Show loading indicator
+            loadingIndicator.classList.add('active');
+            submitBtn.disabled = true;
+
+            // Collect form data
+            const formData = {
+                timestamp: new Date().toISOString(),
+                brand: document.getElementById('brand').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                leadContact: document.getElementById('leadContact').value.trim(),
+                pocEmail: document.getElementById('pocEmail').value.trim(),
+                pocMobile: document.getElementById('pocMobile').value.trim() || 'Not provided',
+                notes: document.getElementById('notes').value.trim() || 'None'
+            };
+
+            try {
+                // Check if Google Script URL is configured
+                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                    throw new Error('Google Apps Script URL not configured');
+                }
+
+                // Submit to Google Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Required for Google Apps Script
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                // Since we're using no-cors, we can't read the response
+                // We'll assume success if no error was thrown
+                loadingIndicator.classList.remove('active');
+                successMessage.style.display = 'block';
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                form.reset();
+                submitBtn.disabled = false;
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                loadingIndicator.classList.remove('active');
+                
+                // For demo purposes, show success anyway
+                // In production, you'd want to handle this properly
+                if (GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+                    errorMessage.innerHTML = `
+                        <span class="message-icon">⚠</span>
+                        <strong>Configuration Required:</strong> Please set up Google Apps Script integration first. 
+                        See the setup instructions below.
+                    `;
+                    errorMessage.style.display = 'block';
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+                errorMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Reset form
+        resetBtn.addEventListener('click', () => {
+            form.reset();
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error');
+            });
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+        });
+
+        // Real-time validation
+        form.addEventListener('input', (e) => {
+            const formGroup = e.target.closest('.form-group');
+            if (formGroup) {
+                formGroup.classList.remove('error');
+            }
+        });
+    </script>
+</body>
+</html>
