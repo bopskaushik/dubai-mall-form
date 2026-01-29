@@ -460,7 +460,7 @@
             });
 
             // Validate required text fields
-            const requiredFields = ['brand', 'name', 'leadContact', 'pocEmail'];
+            const requiredFields = ['brand', 'name', 'leadContact', 'pocEmail, 'pocMobile'];
             requiredFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
                 if (!field.value.trim()) {
@@ -506,7 +506,7 @@
                 name: document.getElementById('name').value.trim(),
                 leadContact: document.getElementById('leadContact').value.trim(),
                 pocEmail: document.getElementById('pocEmail').value.trim(),
-                pocMobile: document.getElementById('pocMobile').value.trim() || 'Not provided',
+                pocMobile: document.getElementById('pocMobile').value.trim(),
                 notes: document.getElementById('notes').value.trim() || 'None'
             };
 
